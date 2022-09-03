@@ -1,0 +1,14 @@
+.message-items {
+    display: none;
+}
+
+.message:hover .message-items {
+    display: flex;
+}
+.message-text:hover small {
+    opacity: 1;
+}
+
+.share-icon {
+    transform: rotateY(180deg);
+}
