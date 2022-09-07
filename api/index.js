@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -10,10 +12,9 @@ const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
 const conversationRoute = require("./routes/conversations");
 const messageRoute = require("./routes/messages");
-const router = express.Router();
 const path = require("path");
 const cors = require("cors");
-
+const fs = require("fs-extra");
 dotenv.config();
 
 mongoose.connect(
@@ -25,28 +26,42 @@ mongoose.connect(
 );
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
+// app.use(express.static(__dirname + "/public/images"));
+
+// app.use("/videos", express.static(path.join(__dirname, "public/videos")));
 //middleware
+
+
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
-app.use(cors());
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, req.body.name);
-  },
+app.use(cors())
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("cross-origin-resource-policy", "same-origin");
+  next();
 });
 
-const upload = multer({ storage: storage });
-app.post("/api/upload", upload.single("file"), (req, res) => {
-  try {
-    return res.status(200).json("File uploded successfully");
-  } catch (error) {
-    console.error(error);
-  }
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, callback) => {
+      let type = req.params.type;
+      let path = `./public/${type}s`;
+      fs.mkdirsSync(path);
+      callback(null, path);
+    },
+    filename: (req, file, callback) => {
+      callback(null, file.originalname);
+    },
+  }),
+});
+
+app.post("/api/upload/:type", upload.single("file"), (req, res) => {
+  res.status(200).send("FILE SUCCESSFULLY UPLOADED");
 });
 
 app.use("/api/auth", authRoute);

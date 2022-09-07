@@ -3,10 +3,10 @@ import { POST_ACTIONS } from "./actions";
 
 
 const initialState = {
-  text: "",
+  desc: "",
   image: null,
   video: null,
-    posts: [],
+  posts: [],
   loading:false
 };
 
@@ -17,8 +17,8 @@ const postSlice = createSlice({
   reducers: {
     setPostData(state, action) {
       switch (action.payload.type) {
-        case POST_ACTIONS.text:
-          state.text = action.payload.data;
+        case POST_ACTIONS.desc:
+          state.desc = action.payload.data;
           break;
         case POST_ACTIONS.image:
           state.image = action.payload.data;
@@ -40,7 +40,7 @@ const postSlice = createSlice({
           state.video = null;
           break;
         case POST_ACTIONS.clearAll:
-          state.text = "";
+          state.desc = "";
           state.image = null;
           state.video = null;
           break;
@@ -50,10 +50,7 @@ const postSlice = createSlice({
     },
     setLoading(state, action) {
       state.loading = action.payload;
-    },
-    setPostDataFromFirebase(state, action) {
-      state.posts = action.payload.data;
-    },
+    }
   },
 });
 

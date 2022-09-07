@@ -1,22 +1,36 @@
 import React from 'react'
-import { useSelector } from "react-redux";
+import { useContext } from 'react';
 import {IoMdAddCircle} from 'react-icons/io'
 import { MdOutlineClose } from "react-icons/md";
+import { loginCall } from '../../../apiCalls';
+import { AuthContext } from '../../../context/AuthContext';
 
-import { useDispatch } from "react-redux";
 
-const UserCard = ({ isAddAccount }) => {
-  const {userName,userPhoto} = useSelector((s) => s.user);
-  const dispatch = useDispatch()
+const UserCard = ({ isAddAccount, user = "", setUserAccounts }) => {
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const { dispatch } = useContext(AuthContext);
+  function login() {
+    const email = user.email;
+    const password = user.password;
+    loginCall({email,password},dispatch)
+  }
+
+  function logout() {
+    const updatedAccountes = JSON.parse(
+      localStorage.getItem("userAccounts")
+    ).filter((account) => {
+      return account._id !== user._id;
+    });
+    localStorage.setItem("userAccounts", JSON.stringify(updatedAccountes));
+    setUserAccounts(JSON.parse(localStorage.getItem("userAccounts")));
+  }
   return (
     <div
-      // onClick={() => dispatch(signInAPI())}
+      
       className="rounded-lg group overflow-hidden  relative w-40 border cursor-pointer shadow-sm bg-white hover:shadow-lg transition-all duration-200 ease-in-out "
     >
       {!isAddAccount && (
-        <div className=""
-          // onClick={()=>dispatch(signOutAPI())}
-        >
+        <div className="" onClick={logout}>
           <MdOutlineClose
             className="top-1 left-1 group group-hover:fill-gray-500  fill-white group-hover:-translate-x-1 group-hover:-translate-y-1 transition-all duration-100 group-hover:scale-150 
           group-hover:bg-white
@@ -26,14 +40,19 @@ const UserCard = ({ isAddAccount }) => {
       )}
 
       {!isAddAccount ? (
-        <div className=" text-center">
+        <div onClick={login}
+          className=" text-center ">
           <img
-            title={userName}
+            title={user.username}
             className="object-cover w-full h-full"
-            src={userPhoto}
-            alt={userName}
+            src={
+              user.profilePicture
+                ? PF + user.profilePicture
+                : PF + "noAvatar.png"
+            }
+            alt={user.username}
           />
-          <h1 className="text-xl py-2 text-gray-700">{userName}</h1>
+          <h1 className="text-xl py-2 px-1 text-gray-700">{user.username}</h1>
         </div>
       ) : (
         <div className=" text-center ">
@@ -45,6 +64,6 @@ const UserCard = ({ isAddAccount }) => {
       )}
     </div>
   );
-}
+};
 
 export default UserCard

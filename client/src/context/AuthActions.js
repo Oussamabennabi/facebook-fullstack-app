@@ -20,3 +20,25 @@ export const Unfollow = (userId) => ({
   type: "UNFOLLOW",
   payload: userId,
 });
+//LOGOUT
+
+export const AddDesc = (desc) => ({
+  type: "ADD_DESC",
+  payload: desc,
+});
+
+export const AddProfilePicture = (imageName) => ({
+  type: "ADD_PROFILE_PICTURE",
+  payload: imageName,
+});
+
+export const AddProfileCover = (imageName) => ({
+  type: "ADD_PROFILE_COVER",
+  payload: imageName,
+});
+
+
+export const Logout = (userId) => ({
+  type: "LOGOUT",
+  payload: userId,
+});

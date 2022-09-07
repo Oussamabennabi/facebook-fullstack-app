@@ -1,5 +1,6 @@
 export const POST_ACTIONS = {
-  text: "text",
+  
+  desc: "desc",
   image: "image",
   clearAll: "clearAll",
   video:"video",

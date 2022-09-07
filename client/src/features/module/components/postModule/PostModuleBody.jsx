@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo } from "react";
+import React, { memo, useMemo } from "react";
 
 import AddPhotoOrVideo from "./AddPhotoOrVideo";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,14 +12,14 @@ const PostModuleBody = ({setShowAddPhotoOrVideoBlock,showAddPhotoOrVideoBlock}) 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const { user:{username, profilePicture} } = useContext(AuthContext);
-  const {text,image,video} = useSelector((s) => s.post);
+  const {image,video} = useSelector((s) => s.post);
   const dispatch = useDispatch()
   
   
   function handleTextChange(e) {
       dispatch(
         POST_REDUCERS.setPostData({
-          type: POST_ACTIONS.text,
+          type: POST_ACTIONS.desc,
           data: e.target.value,
         })
       );
@@ -47,7 +47,7 @@ const PostModuleBody = ({setShowAddPhotoOrVideoBlock,showAddPhotoOrVideoBlock}) 
         <div className="flex flex-col gap-1 items-start">
           <h1 className="font-semibold text-sm">
             {username}
-            {" is a legend"}
+            {" is a feeling like a legend"}
           </h1>
           <button className=" text-sm rounded  bg-neutral-600 px-2 py-1 ">
             Friends except...

@@ -4,16 +4,30 @@ import { SELECT_MODULE } from "./actions";
 const moduleSlice = createSlice({
   name: "module",
   initialState: {
-    isModuleHidden: true,
-    selectedModule: SELECT_MODULE.creatPostModule,
+    isPostModuleHidden: true,
+    isUserModuleHidden: true,
+    // if the user choose to upload a coverImage or profile picture
+    typeOfImage:"",
+    selectedPostModule: SELECT_MODULE.creatPostModule,
+    selectedUserModule:SELECT_MODULE.updateUserModule,
   },
   reducers: {
-    showModule(state) {
-      state.isModuleHidden = false;
+    showPostModule(state) {
+      state.isPostModuleHidden = false;
     },
-    hideModule(state) {
-      state.isModuleHidden = true;
-      state.selectedModule = SELECT_MODULE.creatPostModule;
+    hidePostModule(state) {
+      state.isPostModuleHidden = true;
+      state.selectedPostModule = SELECT_MODULE.creatPostModule;
+    },
+    // user
+    showUserModule(state,action) {
+      state.isUserModuleHidden = false;
+      state.typeOfImage = action.payload.type;
+    },
+    hideUserModule(state) {
+      state.isUserModuleHidden = true;
+      state.selectedUserModule = SELECT_MODULE.updateUserModule;
+      state.typeOfImage = ""
     },
   },
 });

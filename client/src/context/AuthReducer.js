@@ -18,6 +18,12 @@ const AuthReducer = (state, action) => {
         isFetching: false,
         error: true,
       };
+    case "LOGOUT":
+      return {
+        user: null,
+        isFetching: false,
+        error: false,
+      };
     case "FOLLOW":
       return {
         ...state,
@@ -36,6 +42,33 @@ const AuthReducer = (state, action) => {
           ),
         },
       };
+    case "ADD_DESC":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          desc: action.payload,
+        },
+      };
+    case "ADD_PROFILE_PICTURE":
+      return {
+        ...state,
+
+        user: {
+          ...state.user,
+          profilePicture: action.payload,
+        },
+      };
+
+    case "ADD_PROFILE_COVER":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          coverPicture:action.payload,
+        },
+      };
+
     default:
       return state;
   }

@@ -4,31 +4,53 @@ import { TiLocation } from "react-icons/ti";
 import { ReactComponent as FeelingActivityIcon} from "../../assets/feeling-activity.svg";
 import { ReactComponent as PhotoVideoIcon} from "../../assets/photo-video.svg";
 import {useDispatch,useSelector} from 'react-redux'
-import { serverTimestamp } from 'firebase/firestore';
 import { MODULE_REDUCERS } from '../../../../store/module-slice';
 import { POST_REDUCERS } from '../../../../store/post-slice';
 import { POST_ACTIONS } from '../../../../store/post-slice/actions';
+import { useContext } from 'react';
+import { AuthContext } from '../../../../context/AuthContext';
+import axios from "axios"
 const PostModuleFooter = ({setShowAddPhotoOrVideoBlock,showAddPhotoOrVideoBlock }) => {
   const dispatch = useDispatch()
-  	const { userName, userPhoto, userId } = useSelector((s) => s.user);
+  	const { user:{_id}} = useContext(AuthContext);
     
-	const { text, image, video } = useSelector((s) => s.post);
+	const { desc, image, video } = useSelector((s) => s.post);
   
-  function handleSubmit() {
-    console.log("submited")
-      const payload = {
-        userName,
-        userId,
-        text,
-        userPhoto,
-        image: image ? image : null,
-        video: video ? video : null,
-        timestamp: serverTimestamp(),
+   async function handleSubmit() {
+    const newPost = {
+      userId: _id,
+      desc,
+      image: image ? image.name : null,
+      video: video ? video.name : null,
     };
+     // uploading to server
+     if (image) {
+        try {
+          await axios.post("/upload/image", image);
+        } catch (err) {
+          console.log(err)
+        }
+      
+    }
+      if (video) {
+        try {
+          await axios.post("/upload/video", video);
+
+
+        } catch (err) {
+          console.log(err)
+        }
+      }
+     
+    //  posting...
+        try {
+      await axios.post("/posts", newPost);
+            //TODO:
+          window.location.reload();
+    } catch (err) {}
     
-    // TODO: post the POST
     
-      dispatch(MODULE_REDUCERS.hideModule());
+      dispatch(MODULE_REDUCERS.hidePostModule());
        dispatch(
          POST_REDUCERS.clearPost({
            type: POST_ACTIONS.clearAll,
@@ -98,7 +120,7 @@ const PostModuleFooter = ({setShowAddPhotoOrVideoBlock,showAddPhotoOrVideoBlock 
       <div className="w-full mt-5">
         <button
           onClick={handleSubmit}
-          disabled={!text}
+          disabled={!desc&&!image&&!video}
           className="disabled:bg-neutral-600 disabled:cursor-not-allowed bg-blue-600 font-bold hover:bg-blue-500  cursor-pointer w-full p-2 rounded-lg "
         >
           Post

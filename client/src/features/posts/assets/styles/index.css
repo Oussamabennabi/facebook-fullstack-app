@@ -224,6 +224,7 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  margin-top: -2px;
 }
 
 .title {

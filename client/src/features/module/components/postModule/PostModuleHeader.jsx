@@ -8,15 +8,15 @@ import { POST_ACTIONS } from "../../../../store/post-slice/actions";
 
 const PostModuleHeader = () => {
   const dispatch = useDispatch();
-  const { selectedModule } = useSelector((s) => s.module);
+  const { selectedPostModule } = useSelector((s) => s.module);
     
   return (
     <>
       <div className="px-5 flex justify-between items-center h-10">
-        <h1 className="font-bold text-xl mx-auto">{selectedModule}</h1>
+        <h1 className="font-bold text-xl mx-auto">{selectedPostModule}</h1>
         <button
           onClick={() => {
-            dispatch(MODULE_REDUCERS.hideModule());
+            dispatch(MODULE_REDUCERS.hidePostModule());
             dispatch(
               POST_REDUCERS.clearPost({
                 type: POST_ACTIONS.clearAll,

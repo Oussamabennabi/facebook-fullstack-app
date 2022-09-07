@@ -1,30 +1,39 @@
 import React from "react";
 import { ImFilePicture } from "react-icons/im";
 import { VscChromeClose } from "react-icons/vsc";
+import { useDispatch, useSelector } from "react-redux";
 import { POST_REDUCERS } from "../../../../store/post-slice";
 import { POST_ACTIONS } from "../../../../store/post-slice/actions";
-import { useDispatch, useSelector } from "react-redux";
 const AddPhotoOrVideo = ({ setShowAddPhotoOrVideoBlock }) => {
-  const dispatch = useDispatch();
   const { image, video } = useSelector((s) => s.post);
+  const dispatch = useDispatch()
   function handleImageChange(e) {
     
     const type = e.target.files[0].type.includes("image")
-      ? "image":"video";
+      ? "image" : "video";
+    const file = e.target.files[0];
     if (type === "image") {
+      const blob = file.slice(0, file.size, file.type); 
+      const newFile = new File([blob], new Date() + file.name, {
+        type: file.type,
+      });
       dispatch(
         POST_REDUCERS.setPostData({
           type: POST_ACTIONS.image,
-          data: e.target.files[0],
+          data:newFile,
         })
       );
         
     }
     if (type === "video") {
+       const blob = file.slice(0, file.size, file.type);
+       const newFile = new File([blob], new Date() + file.name, {
+         type: file.type,
+       });
       dispatch(
         POST_REDUCERS.setPostData({
           type: POST_ACTIONS.video,
-          data: e.target.files[0],
+          data:newFile,
         })
       );
     }
@@ -36,7 +45,7 @@ const AddPhotoOrVideo = ({ setShowAddPhotoOrVideoBlock }) => {
     <label
       htmlFor="photo-video-input"
       className={`flex flex-col ${
-        !image && "bg-neutral-700"
+        (!image||!video) && "bg-neutral-700"
       } hover:bg-neutral-600 cursor-pointer rounded-lg p-2`}
     >
       <div className="flex justify-end">
@@ -51,7 +60,8 @@ const AddPhotoOrVideo = ({ setShowAddPhotoOrVideoBlock }) => {
             type="file"
             onChange={handleImageChange}
             accept="image/*, video/*"
-            className="hidden"
+        className="hidden"
+        name="file"
             id="photo-video-input"
           />
 

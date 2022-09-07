@@ -4,15 +4,14 @@ import { Footer } from "../layouts";
 import axios from "axios";
 import FaceboolLoginIcon from "../assets/facebook-login.svg";
 import { Link, useHistory } from "react-router-dom";
+import { useEffect } from "react";
 const Register = () => {
-  // axios.defaults.baseURL = process.env.REACT_APP_BACKEND_BASE_URL;
-
   const username = useRef();
   const email = useRef();
   const password = useRef();
   const passwordAgain = useRef();
   const [errorMsg, setErrorMsg] = useState("");
-
+  const [userAccounts, setUserAccounts] = useState([])
   const history = useHistory();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +36,9 @@ const Register = () => {
       }
     }
   };
+  useEffect(() => {
+    setUserAccounts(JSON.parse(localStorage.getItem("userAccounts")))
+  },[])
   return (
     <>
       <div className="  bg-slate-100  flex justify-center items-center p-4 lg:p-8">
@@ -53,9 +55,13 @@ const Register = () => {
                 Click your picture or add an account.
               </p>
             </div>
-            <div className="flex gap-6  justify-center  flex-wrap">
-              {/* {isSignedIn && <UserCard isAddAccount={false} />} */}
-              <UserCard isAddAccount={true} />
+            <div className="flex gap-6   justify-center lg:justify-start  flex-wrap">
+              <UserCard isAddAccount />
+              {userAccounts?.slice(0, 3).map((user, i) => (
+                <div key={i}>
+                  <UserCard user={user} setUserAccounts={setUserAccounts} />
+                </div>
+              ))}
             </div>
           </div>
           {/* Login form */}
@@ -106,7 +112,7 @@ const Register = () => {
               </form>
             </div>
             <p className="text-sm text-center py-7">
-              <a href="" className="font-bold ">
+              <a href="/" className="font-bold ">
                 Create a Page
               </a>{" "}
               for a celebrity, brand or business.

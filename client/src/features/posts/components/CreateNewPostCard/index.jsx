@@ -10,9 +10,9 @@ import { ReactComponent as FeelingActivityIcon } from "../../assets/icons/feelin
 import { useDispatch } from "react-redux";
 import { MODULE_REDUCERS } from "../../../../store/module-slice";
 //
-import { useSelector } from "react-redux";
 import { useContext } from "react";
 import { AuthContext } from "../../../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const CreateNewPostCard = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -24,12 +24,14 @@ const CreateNewPostCard = () => {
   return (
     <div className="card-container section-container">
       <div className="post">
+        <Link to={`/profile/${username}`}>
         <img
           src={profilePicture ? PF + profilePicture : PF + "noAvatar.png"}
           alt={username}
         />
+        </Link>
         <button
-          onClick={() => dispatch(MODULE_REDUCERS.showModule())}
+          onClick={() => dispatch(MODULE_REDUCERS.showPostModule())}
           className="post-btn"
           // disabled={isLoading}
         >
@@ -46,7 +48,7 @@ const CreateNewPostCard = () => {
           <div className="text">Live Video</div>
         </button>
 
-        <button onClick={() => dispatch(MODULE_REDUCERS.showModule())}>
+        <button onClick={() => dispatch(MODULE_REDUCERS.showPostModule())}>
           <span>
             <VideoPhotoIcon fill="#44BC62" />
           </span>

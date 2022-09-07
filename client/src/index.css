@@ -50,11 +50,15 @@ body {
   white-space: nowrap;
 
 }
-.icon:hover .info-text-from-top-mesg {
+.icon:hover .info-text-from-top-mesg,.person-info:hover .info-text-from-top-mesg {
   opacity: 1;
   transform: translate(-50%, -15%);
+}
+.person-info:hover .info-text-from-top-mesg {
+  transform: translate(-50%, 10%);
 
 }
+
 .info-text-contact-icon {
   left: 0;
   transform: translate(-50%, 15%);

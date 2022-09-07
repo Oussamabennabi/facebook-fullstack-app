@@ -16,43 +16,52 @@ import { ImExit } from "react-icons/im";
 import { FaLock, FaKeyboard } from "react-icons/fa";
 import { BsListStars, BsFillMoonFill } from "react-icons/bs";
 import {RiListSettingsFill} from 'react-icons/ri'
-
+import {IoMdRadioButtonOn} from 'react-icons/io'
 import { ReactComponent as BackIcon } from '../../assets/icons/back.svg';
-import { DropdownItem } from '../Dropdown';
+import { DropdownItem } from '../AccountDropdown';
 
-import { useSelector, useDispatch } from "react-redux";
 import { AuthContext } from '../../../../context/AuthContext';
-import { Link } from 'react-router-dom';
-
+import { Link, useHistory } from 'react-router-dom';
+import { loginCall, logoutCall } from '../../../../apiCalls';
+import {FriendsSidebar} from '../../../'
 export const MainDropdown = ({ setActiveMenu }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  
+  const history = useHistory()
   const {
-    user: { username, profilePicture },
+    user: { username, profilePicture,  },
+    dispatch,
   } = useContext(AuthContext);
 
-  
+  async function handleClick() {
+    logoutCall(dispatch)
+    history.push("/")
+  }
   return (
     <>
       <div className="shadow-black mb-3 shadow-sm rounded-md">
-        <Link to={ "/profile"+username}></Link>
-        <DropdownItem
-          leftIcon={
-            <img className="user-icon" alt={username} src={
-                  profilePicture
-                    ? PF + profilePicture
-                    : PF + "noAvatar.png"
-                } />
-          }
-        >
-          <h3 className="text-white font-semibold text-base">{username}</h3>
-        </DropdownItem>
+        <Link to={"/profile/" + username}>
+          <DropdownItem
+            leftIcon={
+              <img
+                className="user-icon"
+                alt={username}
+                src={profilePicture ? PF + profilePicture : PF + "noAvatar.png"}
+              />
+            }
+          >
+            <h3 className="text-white font-semibold text-base my-auto">
+              {username}
+            </h3>
+          </DropdownItem>
+        </Link>
         <hr className="border-gray-700 w-11/12 mx-auto my-1" />
-        <DropdownItem>
-          <h3 className="text-blue-500 font-semibold text-sm">
-            See all profiles
-          </h3>
-        </DropdownItem>
+        <div onClick={() => setActiveMenu("select profile")}>
+          <DropdownItem>
+            <h3 className="text-blue-500 font-semibold text-sm">
+              See all profiles
+            </h3>
+          </DropdownItem>
+        </div>
       </div>
       <div onClick={() => setActiveMenu("settings")}>
         <DropdownItem
@@ -81,7 +90,7 @@ export const MainDropdown = ({ setActiveMenu }) => {
       <DropdownItem leftIcon={<MdFeedback />}>
         <h3 className="text-white font-semibold ">Give feedback</h3>
       </DropdownItem>
-      <div>
+      <div onClick={handleClick}>
         <DropdownItem leftIcon={<ImExit />}>
           <h3 className="text-white font-semibold ">Log Out</h3>
         </DropdownItem>
@@ -309,4 +318,68 @@ export const KeyboardDropdown = ({ setActiveMenu }) => {
     </>
   );
 };
-          
+export const SelectProfileDropdown = ({ setActiveMenu }) => {
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER
+  const { user, dispatch } = useContext(AuthContext);
+  const accounts = JSON.parse(localStorage.getItem("userAccounts"));
+  const history = useHistory()
+ 
+  function changeAccount(account) {
+    logoutCall(dispatch)
+    history.push("/");
+    loginCall(account,dispatch)
+
+  }
+  return (
+    <div className="">
+      <div className="dropdown-header mb-3">
+        <span onClick={() => setActiveMenu("main")}>
+          <BackIcon className="icon" />
+        </span>
+        <h1 className="font-bold text-2xl text-white">Select Profile</h1>
+      </div>
+      {accounts?.slice(0, 5).map((account, i) => (
+        <div
+          onClick={()=>changeAccount(account)}
+          key={i}>
+          <DropdownItem
+            isRadio
+            rightIcon={
+              <IoMdRadioButtonOn
+                className={`${
+                  user.username === account.username
+                    ? "fill-blue-500 "
+                    : "fill-gray-300"
+                } text-lg`}
+              />
+            }
+            leftIcon={
+              <img
+                className="user-icon"
+                src={
+                  account.profilePicture
+                    ? PF + account.profilePicture
+                    : PF + "noAvatar.png"
+                }
+                alt={account.username}
+              />
+            }
+          >
+            <h3 className="text-white font-semibold text-base my-auto mr-auto">
+              {account.username}
+            </h3>
+          </DropdownItem>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export const FriendsDropdown = () => {
+  
+  return (
+    <>
+      <FriendsSidebar/>
+    </>
+  );
+}     

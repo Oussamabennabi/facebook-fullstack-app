@@ -4,8 +4,6 @@ import FeaturesSidebar from '../layouts/sidbars/FeaturesSidebar'
 
 const Bookmarks = () => {
 
-      
-
   return (
     <div className="overflow-hidden h-screen">
       <Navbar />

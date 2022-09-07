@@ -6,6 +6,7 @@ import PostModuleFooter from "./components/postModule/PostModuleFooter";
 const CreatePostModule = () => {
   const [showAddPhotoOrVideoBlock, setShowAddPhotoOrVideoBlock] = useState(true);
 
+  
   return (
     <ModuleContainer>
       <PostModuleHeader />

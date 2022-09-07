@@ -1,1 +1,1 @@
-// just for the imports
+export {default as CreateNewPostCard} from './components/CreateNewPostCard'

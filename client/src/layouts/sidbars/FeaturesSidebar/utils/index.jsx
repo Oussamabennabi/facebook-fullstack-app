@@ -135,20 +135,20 @@ export const FeaturesIcons = [
 
 
 export const YourShortcutsIcons = [
-    {
-      icon:g1Icon,
-      title:"Words With Friends"
-    },
-    {
-      icon:g2Icon,
-      title:"Draw Somthing"
-    },
-    {
-      icon:g3Icon,
-      title:"React JS Developers"
-    },
-    {
-      icon:g4Icon,
-      title:"FarmVill 2"
-    },
-]
+  {
+    icon: g1Icon,
+    title: "Words With Friends",
+  },
+  {
+    icon: g2Icon,
+    title: "React JS Developers",
+  },
+  {
+    icon: g3Icon,
+    title: "Draw Somthing",
+  },
+  {
+    icon: g4Icon,
+    title: "FarmVill 2",
+  },
+];

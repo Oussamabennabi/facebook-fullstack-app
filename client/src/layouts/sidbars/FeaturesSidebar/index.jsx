@@ -8,6 +8,7 @@ import { ReactComponent as SeeLessIcon } from './assets/icons/see_less.svg'
 import ExpandIcon from '../components/ui/ExpandIcon'
 import { AuthContext } from '../../../context/AuthContext'
 import { useContext } from 'react'
+import { Link } from 'react-router-dom'
 
 
 const FeaturesSidebar = () => {
@@ -25,11 +26,13 @@ const FeaturesSidebar = () => {
   }, [isListExpaned]);
   return (
     <div className="overflow-y-scroll h-full w-full max-w-none :max-w-[calc(360px)] flex justify-between  flex-col items-center py-4  px-2 ">
-      {/* TODO: */}
+     
       <div className="w-full">
+        <Link to={`/profile/${username}`}>
         <SidebarItem leftIcon={profilePicture ? PF + profilePicture : PF + "noAvatar.png"}>
           <h3 className=" font-semibold text-base text-white">{username}</h3>
         </SidebarItem>
+        </Link>
         {FeaturesIcons.slice(0, iconsCount).map((icon, i) => (
           <SidebarItem key={i} leftIcon={icon.icon}>
             <h3 className=" font-semibold text-base text-white">
@@ -74,12 +77,12 @@ const FeaturesSidebar = () => {
       {/*  */}
       <div className="w-full">
         <p className="text-sm text-neutral-500 mt-4">
-          <a href="#">Privacy</a>· <a href="#">Terms</a>·{" "}
-          <a href="#">Advertising</a>· <a href="#">Ad Choices</a>·{" "}
-          <a href="#">Cookies</a>· · Meta © 2022
+          <a href="/">Privacy</a>· <a href="/">Terms</a>·{" "}
+          <a href="/">Advertising</a>· <a href="/">Ad Choices</a>·{" "}
+          <a href="/">Cookies</a>· · Meta © 2022
           <span className="block  mt-3">
             Made With ❤️ By{" "}
-            <a href="https://github.com/Oussamabennabi" target={"_blank"}>
+            <a href="https://github.com/Oussamabennabi" rel='noreferrer' target={"_blank"}>
               Oussama Bennabi
             </a>
           </span>

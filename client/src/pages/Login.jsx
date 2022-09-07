@@ -1,9 +1,8 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { UserCard } from "../features/authentication/index";
 import { Footer } from "../layouts";
 import FaceboolLoginIcon from "../assets/facebook-login.svg";
-import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { loginCall } from "../apiCalls";
 const Login = () => {
@@ -12,11 +11,14 @@ const Login = () => {
   const password = useRef();
   const passwordAgain = useRef();
   const [errorMsg, setErrorMsg] = useState("");
-    const history = useHistory();
-  const { isFetching, dispatch } = useContext(AuthContext);
-
+  const [userAccounts, setUserAccounts] = useState([]);
+  
+  const {  dispatch } = useContext(AuthContext);
    const handleSubmit = (e) => {
      e.preventDefault();
+      if (passwordAgain.current.value !== password.current.value) {
+        passwordAgain.current.setCustomValidity("Passwords don't match!");
+      }
      if (!email || !password ) {
        setErrorMsg("please enter your informations correctly");
        return;
@@ -26,7 +28,9 @@ const Login = () => {
       dispatch
     );
   };
-
+useEffect(() => {
+  setUserAccounts(JSON.parse(localStorage.getItem("userAccounts")));
+}, []);
   return (
     <>
       <div className="  bg-slate-100  flex justify-center items-center p-4 lg:p-8">
@@ -43,9 +47,13 @@ const Login = () => {
                 Click your picture or add an account.
               </p>
             </div>
-            <div className="flex gap-6  justify-center  flex-wrap">
-              {/* {isSignedIn && <UserCard isAddAccount={false} />} */}
+            <div className="flex gap-6  justify-center lg:justify-start flex-wrap">
               <UserCard isAddAccount={true} />
+              {userAccounts?.slice(0,3)?.map((user, i) => (
+                <div key={i}>
+                  <UserCard user={user} setUserAccounts={setUserAccounts} />
+                </div>
+              ))}
             </div>
           </div>
           {/* Login form */}
@@ -80,17 +88,16 @@ const Login = () => {
                 <button className="text-white text-xl font-bold px-3 py-4 hover:bg-blue-700 transition-all duration-300  bg-blue-600 rounded-lg">
                   Log In
                 </button>
-                <Link className="text-center" to={'/register'}>
+                <Link className="text-center" to={"/register"}>
                   <button className="text-white text-lg font-bold px-3 py-4 hover:bg-green-600 transition-all duration-300 w-fit mx-auto bg-green-500 rounded-lg">
                     Create new account
                   </button>
-
                 </Link>
                 <hr className="mt-4" />
               </form>
             </div>
             <p className="text-sm text-center py-7">
-              <a href="" className="font-bold ">
+              <a href="/" className="font-bold ">
                 Create a Page
               </a>{" "}
               for a celebrity, brand or business.

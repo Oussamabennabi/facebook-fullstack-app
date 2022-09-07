@@ -5,7 +5,6 @@ module.exports = {
     "./src/layouts"
   ],
   theme: {
-    //  namedGroups: ["parent1", "parent2"],
   },
 
   plugins: [
