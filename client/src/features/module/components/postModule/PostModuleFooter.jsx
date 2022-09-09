@@ -10,12 +10,11 @@ import { POST_ACTIONS } from '../../../../store/post-slice/actions';
 import { useContext } from 'react';
 import { AuthContext } from '../../../../context/AuthContext';
 import axios from "axios"
-const PostModuleFooter = ({setShowAddPhotoOrVideoBlock,showAddPhotoOrVideoBlock }) => {
+const PostModuleFooter = ({setShowAddPhotoOrVideoBlock,showAddPhotoOrVideoBlock,formData }) => {
   const dispatch = useDispatch()
   	const { user:{_id}} = useContext(AuthContext);
     
 	const { desc, image, video } = useSelector((s) => s.post);
-  
    async function handleSubmit() {
     const newPost = {
       userId: _id,
@@ -24,28 +23,17 @@ const PostModuleFooter = ({setShowAddPhotoOrVideoBlock,showAddPhotoOrVideoBlock 
       video: video ? video.name : null,
     };
      // uploading to server
-     if (image) {
-        try {
-          await axios.post("/upload/image", image);
+     if (image || video) {
+       try {
+          await axios.post("/upload", formData);
         } catch (err) {
           console.log(err)
-        }
-      
+        }      
     }
-      if (video) {
-        try {
-          await axios.post("/upload/video", video);
-
-
-        } catch (err) {
-          console.log(err)
-        }
-      }
      
     //  posting...
         try {
       await axios.post("/posts", newPost);
-            //TODO:
           window.location.reload();
     } catch (err) {}
     

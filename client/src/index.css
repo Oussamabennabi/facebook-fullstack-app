@@ -152,3 +152,9 @@ body {
   margin-bottom: 1rem;
   background-color: #242427;
 }
+@media screen and (max-width: 640px)  {
+  .cards-container {
+    grid-template-columns: repeat(2,1fr);
+  }
+  
+}

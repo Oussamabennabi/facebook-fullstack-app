@@ -8,31 +8,31 @@ import { POST_REDUCERS } from "../../../../store/post-slice";
 import { POST_ACTIONS } from "../../../../store/post-slice/actions";
 import { useContext } from "react";
 import { AuthContext } from "../../../../context/AuthContext";
-const PostModuleBody = ({setShowAddPhotoOrVideoBlock,showAddPhotoOrVideoBlock}) => {
+const PostModuleBody = ({
+  setShowAddPhotoOrVideoBlock,
+  showAddPhotoOrVideoBlock,
+  setFormData,
+}) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const { user:{username, profilePicture} } = useContext(AuthContext);
-  const {image,video} = useSelector((s) => s.post);
-  const dispatch = useDispatch()
-  
-  
-  function handleTextChange(e) {
-      dispatch(
-        POST_REDUCERS.setPostData({
-          type: POST_ACTIONS.desc,
-          data: e.target.value,
-        })
-      );
+  const {
+    user: { username, profilePicture },
+  } = useContext(AuthContext);
+  const { image, video } = useSelector((s) => s.post);
+  const dispatch = useDispatch();
 
-    
+  function handleTextChange(e) {
+    dispatch(
+      POST_REDUCERS.setPostData({
+        type: POST_ACTIONS.desc,
+        data: e.target.value,
+      })
+    );
   }
-  
-  const videoComponent = useMemo(() => (
-    <Video video={ video}/>
-  ),[video]);
- 
- const imageComponent = useMemo(() => <Image image={image} />, [image]);
- 
+
+  const videoComponent = useMemo(() => <Video video={video} />, [video]);
+
+  const imageComponent = useMemo(() => <Image image={image} />, [image]);
 
   return (
     <div className="px-5 pr-[calc(20px-9px)] overflow-y-scroll  max-h-[calc(500px)] ">
@@ -96,6 +96,7 @@ const PostModuleBody = ({setShowAddPhotoOrVideoBlock,showAddPhotoOrVideoBlock}) 
 
           {!image && !video && (
             <AddPhotoOrVideo
+              setFormData={setFormData}
               setShowAddPhotoOrVideoBlock={setShowAddPhotoOrVideoBlock}
             />
           )}

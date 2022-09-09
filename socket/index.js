@@ -1,4 +1,5 @@
-const io = require("socket.io")(8900, {
+require("dotenv").config()
+const io = require("socket.io")(process.env.PORT|| 8900, {
   cors: {
     origin: "*",
   },
@@ -25,7 +26,7 @@ const getUser = (userId) => {
 
 io.on("connection", (socket) => {
   //when ceonnect
-  socket.on("getAllUsers", ()=>{
+  socket.on("getAllUsers", () => {
     io.emit("getUsers", users);
   
   });

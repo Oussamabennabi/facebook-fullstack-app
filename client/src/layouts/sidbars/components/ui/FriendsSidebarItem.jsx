@@ -8,7 +8,7 @@ const FriendsSidebarItem = ({ user, isOnline }) => {
         <img
           src={
             user.profilePicture
-              ? PF + user.profilePictureL
+              ? PF + user.profilePicture
               : PF + "noAvatar.png"
           }
           className={`rounded-full  w-8 object-cover outline outline-blue-600 outline-2 outline-offset-1"

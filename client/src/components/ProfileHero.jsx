@@ -21,6 +21,7 @@ const ProfileHero = ({ user }) => {
 
   const moduleDispatch = useDispatch();
   // follow
+
   const [followed, setFollowed] = useState(
     currentUser.followings?.includes(user?._id)
   );

@@ -57,10 +57,10 @@ const Post = ({post}) => {
               <img
                 src={
                   user.profilePicture
-                    ? PF + user.profilePictureL
+                    ? PF + user.profilePicture
                     : PF + "noAvatar.png"
                 }
-                className={`rounded-full  w-8 object-cover outline outline-blue-600 outline-2 outline-offset-1"
+                className={`rounded-full  w-9 object-cover outline outline-blue-600 outline-2 outline-offset-1"
         }`}
                 alt={user.username}
               />

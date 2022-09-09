@@ -169,7 +169,7 @@ function FriendCard({ user}) {
         <img
           className="rounded-lg w-full h-full max-w-[210px] object-cover hover:brightness-105"
           src={
-            user.ProfilePicture ? PF + user.ProfilePicture : PF + "noAvatar.png"
+            user.profilePicture ? PF + user.profilePicture : PF + "noAvatar.png"
           }
           alt=""
             />

@@ -22,7 +22,7 @@ import Watch from "./pages/Watch";
 // stores
 import { MESSENGER_REDUCERS } from "./store/messenger-slice";
 // socket
-const socket = io("ws://localhost:8900");
+const socket = io(process.env.REACT_APP_SOCKET_URL);
 
 function App() {
   const dispatch = useDispatch()
