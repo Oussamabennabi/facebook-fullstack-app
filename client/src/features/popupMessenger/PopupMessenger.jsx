@@ -1,4 +1,4 @@
-import React, { useContext, useEffect,  useState } from 'react'
+import React, {  useContext, useEffect,  useState } from 'react'
 import MessengerBody from './components/MessengerBody';
 import MessengerFooter from './components/MessengerFooter';
 import MessengerHeader from './components/MessengerHeader';
@@ -27,9 +27,11 @@ const PopupMessenger = () => {
     }, [user,socket]);
 
     useEffect(() => {
-      arrivalMessage &&
-        currentChat?.members.includes(arrivalMessage.sender) &&
-        setMessages((prev) => [...prev, arrivalMessage]);
+      if (arrivalMessage) {
+        if (currentChat?.members.includes(arrivalMessage.sender)) {
+          setMessages((prev) => [...prev, arrivalMessage]);
+        }
+      }
     }, [arrivalMessage, currentChat]);
 
     useEffect(() => {
@@ -42,7 +44,7 @@ const PopupMessenger = () => {
         }
       };
       getMessages();
-    }, [currentChat]);
+    }, [currentChat?._id]);
 
 
   return (

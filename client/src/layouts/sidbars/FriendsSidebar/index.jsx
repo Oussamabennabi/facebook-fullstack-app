@@ -13,8 +13,6 @@ const FriendsSidebar = ({ fromDropdown}) => {
   const { socket, currentChat } = useSelector((s) => s.messenger);
 
   const [conversations, setConversations] = useState([]);
-  // const [currentChat, setCurrentChat] = useState(null);
-
   //get friends and online friends
   const [friends, setFriends] = useState([]);
   const [onlineFriends, setOnlineFriends] = useState([]);

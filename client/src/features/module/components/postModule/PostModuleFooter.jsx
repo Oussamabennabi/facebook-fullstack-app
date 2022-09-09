@@ -15,7 +15,8 @@ const PostModuleFooter = ({setShowAddPhotoOrVideoBlock,showAddPhotoOrVideoBlock,
   	const { user:{_id}} = useContext(AuthContext);
     
 	const { desc, image, video } = useSelector((s) => s.post);
-   async function handleSubmit() {
+  async function handleSubmit() {
+     console.log("first")
     const newPost = {
       userId: _id,
       desc,
@@ -25,7 +26,9 @@ const PostModuleFooter = ({setShowAddPhotoOrVideoBlock,showAddPhotoOrVideoBlock,
      // uploading to server
      if (image || video) {
        try {
-          await axios.post("/upload", formData);
+         
+         await axios.post("/upload", formData);
+         console.log("first");
         } catch (err) {
           console.log(err)
         }      
