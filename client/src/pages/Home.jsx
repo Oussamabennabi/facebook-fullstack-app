@@ -5,8 +5,6 @@ import { useSelector } from "react-redux";
 import Main from '../layouts/Main';
 import CreatePostModule from "../features/module/CreatePostModule";
 import { FriendsSidebar,FeaturesSidebar, Navbar } from '../layouts';
-
-
 const Home = () => {
   const { isPostModuleHidden } = useSelector((s) => s.module);
 

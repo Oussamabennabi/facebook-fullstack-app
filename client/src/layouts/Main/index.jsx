@@ -6,6 +6,7 @@ import { AuthContext } from '../../context/AuthContext';
 import axios from "axios"
 import { CreateNewPostCard } from '../../features/posts';
 import { useParams } from 'react-router-dom';
+import IntroductionToTheApp from '../../components/IntroductionToTheApp';
 const Main = () => {
 
   const { loading,  } = useSelector((s) => s.post);
@@ -32,6 +33,7 @@ const Main = () => {
 
   return (
     <section className="  px-3 h-full overflow-scroll">
+      {!username && <IntroductionToTheApp />}
       {(!username || username === curentUser) && <CreateNewPostCard />}
 
       <div className="w-full grid place-items-center">

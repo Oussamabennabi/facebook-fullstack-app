@@ -379,7 +379,7 @@ export const FriendsDropdown = () => {
   
   return (
     <>
-      <FriendsSidebar/>
+      <FriendsSidebar fromDropdown={true}/>
     </>
   );
 }     

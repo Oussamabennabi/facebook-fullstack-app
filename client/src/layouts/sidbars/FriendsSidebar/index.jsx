@@ -7,7 +7,7 @@ import axios from "axios";
 import FriendConversation from "../components/FriendConversation";
 import { useDispatch, useSelector } from "react-redux";
 import { MESSENGER_REDUCERS } from "../../../store/messenger-slice";
-const FriendsSidebar = () => {
+const FriendsSidebar = ({ fromDropdown}) => {
   const dispatch = useDispatch();
   const { user } = useContext(AuthContext);
   const { socket, currentChat } = useSelector((s) => s.messenger);
@@ -62,38 +62,52 @@ const FriendsSidebar = () => {
       <div className="w-full">
         {/* Friends List Header */}
         <div className="mb-2 flex justify-between items-center w-full">
-          <h3 className="text-neutral-500  font-bold">Contacts</h3>
+          <h3 className="text-neutral-500  font-bold">
+            {fromDropdown ? "Chats" : "Contacts"}
+          </h3>
 
-          <div className="flex justify-center items-center gap-4 cursor-pointer">
-            <span className="contact-icon icon relative">
-              <NewRoomIcon fill="#B1B2B8" />
-              <div className="info-text-contact-icon  ">New room</div>
+          <div className={`flex justify-center items-center ${fromDropdown?"gap-0":"gap-4"} cursor-pointer`}>
+            <span
+              className={`contact-icon icon  relative ${
+                fromDropdown && "scale-75"
+              }`}
+            >
+              <NewRoomIcon
+                fill="#B1B2B8"
+                className={`${fromDropdown && "mb-4 "}`}
+              />
+              <div className="info-text-contact-icon ">New room</div>
             </span>
 
-            <span className="contact-icon icon relative">
+            <span
+              className={`contact-icon icon relative ${
+                fromDropdown && "scale-75"
+              }`}
+            >
               <SearchIcon fill="#B1B2B8" />
               <div className="info-text-contact-icon ">
                 Search by name or group
               </div>
             </span>
 
-            <span className="contact-icon icon relative">
+            <span
+              className={`contact-icon icon relative ${
+                fromDropdown && "scale-75"
+              }`}
+            >
               <OptionsIcon fill="#B1B2B8" />
               <div className="info-text-contact-icon ">Options</div>
             </span>
           </div>
         </div>
-       
+
         {conversations.map((c, i) => {
-          const member = c.members.find(m=>m!== user._id)
+          const member = c.members.find((m) => m !== user._id);
           return (
             <div
               key={i}
-              onClick={async () => {
-                // setCurrentChat(c);
-                dispatch(
-                  MESSENGER_REDUCERS.showMessenger({ chat: c })
-                );
+              onClick={() => {
+                dispatch(MESSENGER_REDUCERS.showMessenger({ chat: c }));
               }}
             >
               <FriendConversation

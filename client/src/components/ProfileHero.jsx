@@ -88,10 +88,10 @@ const ProfileHero = ({ user }) => {
   
   return (
     <header className=" text-white relative bg-neutral-800">
-      <div className="h-[300px] max-w-[1250px] bg-neutral-900  -mt-0.5 mx-auto rounded-lg shadow-inner  shadow-black cursor-pointer relative">
+      <div className="h-[300px] max-w-[1250px] bg-neutral-900  -mt-0.5 mx-auto rounded-lg overflow-hidden shadow-inner  shadow-black cursor-pointer relative">
         {user.coverPicture && (
           <img
-            className="w-full h-full cursor-pointer"
+            className="w-full h-full cursor-pointer object-cover"
             src={PF + user.coverPicture}
             alt=""
           />
