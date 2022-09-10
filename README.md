@@ -7,8 +7,14 @@
 - use multiple accounts in one browser
 - profile page
 - update your own profile
-
-
+## Technologies:
+- ### React
+- ### Redux
+- ### NodeJs - Express
+- ### MongoDB
+- ### Multer For file storage (please read the note below)
+- ### SCSS, Tailwindcss
+ 
 ## view the Demo
 https://user-images.githubusercontent.com/88546612/189503554-3b1ef598-c302-49c5-a942-dbb457f44638.mp4
 
